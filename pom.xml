@@ -129,6 +129,14 @@
             <version>42.2.1</version>
         </dependency>
         <dependency>
+            <groupId>com.oracle.jdbc</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ojdbc6-11.2.0.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.9.5.2</version>

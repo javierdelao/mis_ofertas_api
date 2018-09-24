@@ -42,19 +42,35 @@
     </bean>
 
     <!--Data Source-->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="org.postgresql.Driver"/>
-        <property name="jdbcUrl" value="jdbc:postgresql://${jdbc.host}/${jdbc.db}?charSet=UTF-8"/>
-        <property name="user" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="minPoolSize" value="${c3p0.min_size}"/>
-        <property name="maxPoolSize" value="${c3p0.max_size}"/>
-        <property name="maxIdleTime" value="${c3p0.timeout}"/>
-        <property name="maxStatements" value="${c3p0.max_statements}"/>
+    <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
+        <property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
+        <property name="user" value="system"/>
+        <property name="password" value="root"/>
     </bean>
 
+
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="packagesToScan" value="com.mis_ofertas_api.app.model"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+            </props>
+        </property>
+    </bean>
+
+
+
+
+
     <!--Hibernate ORM-->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan">
             <array>
@@ -64,20 +80,21 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
-                <prop key="hibernate.hbm2ddl.auto">${jdbc.auto}</prop>
-                <prop key="hibernate.hbm2ddl.import_files">${jdbc.sqlfile}</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.show_sql">${jdbc.showsql}</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.id.new_generator_mappings">true</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
             </props>
         </property>
     </bean>
+    -->
 
 
 
     <!--Transaction-->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
