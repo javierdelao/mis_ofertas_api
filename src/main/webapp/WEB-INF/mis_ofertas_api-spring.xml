@@ -44,33 +44,13 @@
     <!--Data Source-->
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
         <property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
-        <property name="user" value="system"/>
-        <property name="password" value="root"/>
+        <property name="user" value="portafolio"/>
+        <property name="password" value="portafolio"/>
     </bean>
 
 
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-        </property>
-        <property name="packagesToScan" value="com.mis_ofertas_api.app.model"/>
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
-                <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
-            </props>
-        </property>
-    </bean>
-
-
-
-
-
-    <!--Hibernate ORM-->
-    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan">
             <array>
@@ -79,24 +59,25 @@
         </property>
         <property name="hibernateProperties">
             <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.hbm2ddl.auto">${jdbc.auto}</prop>
+                <prop key="hibernate.hbm2ddl.import_files">${jdbc.sqlfile}</prop>
                 <prop key="hibernate.show_sql">${jdbc.showsql}</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.id.new_generator_mappings">true</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
             </props>
         </property>
     </bean>
-    -->
-
 
 
     <!--Transaction-->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    <!--Transaction-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
 
 
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
