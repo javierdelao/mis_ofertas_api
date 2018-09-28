@@ -34,8 +34,16 @@ public class SystemUser implements Serializable, Bean, LazyCollectorBean{
         private String password;
 
         @ManyToOne
+        @JoinColumn(name="store_id", nullable=false)
+        private Store store;
+
+        @ManyToOne
         @JoinColumn(name="rol_id", nullable=false)
         private Rol rol;
+
+        @ManyToOne
+        @JoinColumn(name="status_id", nullable=false)
+        private Status status;
 
         public SystemUser() {
         }
@@ -96,6 +104,22 @@ public class SystemUser implements Serializable, Bean, LazyCollectorBean{
 
         public void setPassword(String password) {
                 this.password = password;
+        }
+
+        public Status getStatus() {
+                return status;
+        }
+
+        public void setStatus(Status status) {
+                this.status = status;
+        }
+
+        public Store getStore() {
+                return store;
+        }
+
+        public void setStore(Store store) {
+                this.store = store;
         }
 
         @Override
