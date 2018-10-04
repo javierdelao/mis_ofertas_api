@@ -47,6 +47,10 @@ public class InitialDataService {
 
     private DocumentDAO documentDAO;
 
+    private OfferDAO offerDAO;
+
+    private OfferTypeDAO offerTypeDAO;
+
     @Autowired
     public void setConfigProperties(ConfigProperties configProperties) {
         this.configProperties = configProperties;
@@ -130,6 +134,16 @@ public class InitialDataService {
     @Autowired
     public void setDocumentDAO(DocumentDAO documentDAO) {
         this.documentDAO = documentDAO;
+    }
+
+    @Autowired
+    public void setOfferDAO(OfferDAO offerDAO) {
+        this.offerDAO = offerDAO;
+    }
+
+    @Autowired
+    public void setOfferTypeDAO(OfferTypeDAO offerTypeDAO) {
+        this.offerTypeDAO = offerTypeDAO;
     }
 
     @PostConstruct
@@ -253,6 +267,34 @@ public class InitialDataService {
                             product.setStatus(status);
                             product.setImage(image);
                             productDAO.insert(product);
+
+                            {
+                                OfferType offerType = new OfferType();
+                                offerType.setName("2x1");
+                                offerType.setDescription("2x1");
+                                offerTypeDAO.insert(offerType);
+                            }
+
+                            {
+                                OfferType offerType= new OfferType();
+                                offerType.setName("Super descuento");
+                                offerType.setDescription("Super descuento");
+                                offerTypeDAO.insert(offerType);
+
+
+                                Offer offer= new Offer();
+                                offer.setDiscount(15);
+                                offer.setExpirationDate(new Date());
+                                offer.setOfferType(offerType);
+                                offer.setProduct(product);
+                                offer.setPublicationDate(new Date());
+                                offer.setQuantityAvailable(5);
+                                offerDAO.insert(offer);
+
+                            }
+
+
+
 
                             Visit visit= new Visit();
                             visit.setDate(new Date());

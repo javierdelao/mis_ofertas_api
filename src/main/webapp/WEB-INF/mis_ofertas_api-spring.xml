@@ -48,6 +48,17 @@
         <property name="password" value="portafolio"/>
     </bean>
 
+    <!--Data Source-->
+    <bean id="postgresqlDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="org.postgresql.Driver"/>
+        <property name="jdbcUrl" value="jdbc:postgresql://${jdbc.host}/${jdbc.db}?charSet=UTF-8"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="minPoolSize" value="${c3p0.min_size}"/>
+        <property name="maxPoolSize" value="${c3p0.max_size}"/>
+        <property name="maxIdleTime" value="${c3p0.timeout}"/>
+        <property name="maxStatements" value="${c3p0.max_statements}"/>
+    </bean>
 
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -59,6 +70,7 @@
         </property>
         <property name="hibernateProperties">
             <props>
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
                 <prop key="hibernate.hbm2ddl.auto">${jdbc.auto}</prop>
