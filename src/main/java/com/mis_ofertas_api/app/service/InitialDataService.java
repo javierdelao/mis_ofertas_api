@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 public class InitialDataService {
@@ -24,6 +26,26 @@ public class InitialDataService {
     private CommuneDAO communeDAO;
 
     private StoreDAO storeDAO;
+
+    private DiscountDAO discountDAO;
+
+    private AreaDAO areaDAO;
+
+    private ImageDAO imageDAO;
+
+    private ProductDAO productDAO;
+
+    private ProductTypeDAO productTypeDAO;
+
+    private StatusDAO statusDAO;
+
+    private VisitDAO visitDAO;
+
+    private ValorationDAO valorationDAO;
+
+    private CommentDAO commentDAO;
+
+    private DocumentDAO documentDAO;
 
     @Autowired
     public void setConfigProperties(ConfigProperties configProperties) {
@@ -60,6 +82,56 @@ public class InitialDataService {
         this.storeDAO = storeDAO;
     }
 
+    @Autowired
+    public void setDiscountDAO(DiscountDAO discountDAO) {
+        this.discountDAO = discountDAO;
+    }
+
+    @Autowired
+    public void setAreaDAO(AreaDAO areaDAO) {
+        this.areaDAO = areaDAO;
+    }
+
+    @Autowired
+    public void setImageDAO(ImageDAO imageDAO) {
+        this.imageDAO = imageDAO;
+    }
+
+    @Autowired
+    public void setProductDAO(ProductDAO productDAO) {
+        this.productDAO = productDAO;
+    }
+
+    @Autowired
+    public void setProductTypeDAO(ProductTypeDAO productTypeDAO) {
+        this.productTypeDAO = productTypeDAO;
+    }
+
+    @Autowired
+    public void setStatusDAO(StatusDAO statusDAO) {
+        this.statusDAO = statusDAO;
+    }
+
+    @Autowired
+    public void setVisitDAO(VisitDAO visitDAO) {
+        this.visitDAO = visitDAO;
+    }
+
+    @Autowired
+    public void setValorationDAO(ValorationDAO valorationDAO) {
+        this.valorationDAO = valorationDAO;
+    }
+
+    @Autowired
+    public void setCommentDAO(CommentDAO commentDAO) {
+        this.commentDAO = commentDAO;
+    }
+
+    @Autowired
+    public void setDocumentDAO(DocumentDAO documentDAO) {
+        this.documentDAO = documentDAO;
+    }
+
     @PostConstruct
     public void init() {
 
@@ -70,40 +142,40 @@ public class InitialDataService {
             rolAdmin.setName("ADMIN");
             rolDAO.insert(rolAdmin);
 
-            Rol rolRepresentative=new Rol();
+            Rol rolRepresentative = new Rol();
             rolRepresentative.setDescription("tiene acceso a las funcionalidades de representante de algun local comercial");
             rolRepresentative.setName("REPRESENTATIVE");
             rolDAO.insert(rolRepresentative);
 
-            Rol rolClient=new Rol();
+            Rol rolClient = new Rol();
             rolClient.setDescription("tiene acceso a las funcionalidades de representante de algun local comercial");
             rolClient.setName("CLIENT");
             rolDAO.insert(rolClient);
 
 
             {
-                Country country =new Country();
+                Country country = new Country();
                 country.setName("Chile");
                 countryDAO.insert(country);
                 {
-                    City city=new City();
+                    City city = new City();
                     city.setCountry(country);
                     city.setName("Santiago");
                     cityDAO.insert(city);
                     {
-                        Commune commune=new Commune();
+                        Commune commune = new Commune();
                         commune.setCity(city);
                         commune.setName("Las condes");
                         communeDAO.insert(commune);
                     }
                     {
-                        Commune commune=new Commune();
+                        Commune commune = new Commune();
                         commune.setCity(city);
                         commune.setName("Providencia");
                         communeDAO.insert(commune);
 
                         {
-                            Store store=new Store();
+                            Store store = new Store();
                             store.setCommune(commune);
                             store.setDirection("Avenida providencia #123");
                             store.setName("Ripley SA");
@@ -119,13 +191,13 @@ public class InitialDataService {
                         }
 
                         {
-                            Store store=new Store();
+                            Store store = new Store();
                             store.setCommune(commune);
                             store.setDirection("Manuel montt #321");
                             store.setName("Mis ofertas LTDA.");
                             storeDAO.insert(store);
 
-                            SystemUser user=new SystemUser();
+                            SystemUser user = new SystemUser();
                             user.setFirstName("Javier");
                             user.setLastName("De la o");
                             user.setRol(rolAdmin);
@@ -134,47 +206,130 @@ public class InitialDataService {
                             user.setPassword("portafolio");
                             user.setStore(store);
                             userDAO.insert(user);
+
+                            Discount discount = new Discount();
+                            discount.setUser(user);
+                            discount.setCode("325jbkjsvns");
+                            discount.setUsed(false);
+                            discountDAO.insert(discount);
+
+
+                            Area area = new Area();
+                            area.setName("Abarrotes");
+                            area.setDescription("productos como arroz y/o tallarines etc.");
+                            areaDAO.insert(area);
+
+                            ProductType productType=new ProductType();
+                            productType.setName("no me acuerdo");
+                            productType.setDescription("no me acuerdo");
+                            productTypeDAO.insert(productType);
+
+                            {
+                                Status status=new Status();
+                                status.setName("Inactivo");
+                                status.setDescription("no se encuentra disponible");
+                                statusDAO.insert(status);
+                            }
+
+                            Status status=new Status();
+                            status.setName("Activo");
+                            status.setDescription("Se encuentra disponible");
+                            statusDAO.insert(status);
+
+                            Image image=new Image();
+                            image.setPath("test.jpg");
+                            imageDAO.insert(image);
+
+                            Product product=new Product();
+                            product.setUser(user);
+                            product.setPublicationDate(new Date());
+                            product.setName("Notebook Toshiba (Test)");
+                            product.setDescription("Notebook de quinta generacion blabla blabla blabla");
+                            product.setIs_perishable(false);
+                            product.setExpirationDate(null);
+                            product.setPrice(500000);
+                            product.setProductType(productType);
+                            product.setArea(area);
+                            product.setStatus(status);
+                            product.setImage(image);
+                            productDAO.insert(product);
+
+                            Visit visit= new Visit();
+                            visit.setDate(new Date());
+                            visit.setProduct(product);
+                            visit.setSystemUser(user);
+                            visitDAO.insert(visit);
+
+                            Document document=new Document();
+                            document.setUploadDate(new Date());
+                            document.setPath("xdxd.pdf");
+                            documentDAO.insert(document);
+
+                            Document document2=new Document();
+                            document2.setUploadDate(new Date());
+                            document2.setPath("2222.pdf");
+                            documentDAO.insert(document2);
+
+
+                            Comment comment= new Comment();
+                            comment.setCommentDate(new Date());
+                            comment.setText("Comentario de prueba");
+                            comment.setDocuments(new ArrayList<Document>());
+                            comment.getDocuments().add(document);
+                            comment.getDocuments().add(document2);
+                            commentDAO.insert(comment);
+
+                            Valoration valoration=new Valoration();
+                            valoration.setProduct(product);
+                            valoration.setSystemUser(user);
+                            valoration.setValoration_star(4);
+                            valoration.setComment(comment);
+                            valorationDAO.insert(valoration);
+
+                            Valoration valorationDB=valorationDAO.valoration(valoration.getId());
+                            System.out.println(valorationDB);
+
                         }
 
 
                     }
                 }
                 {
-                    City city=new City();
+                    City city = new City();
                     city.setCountry(country);
                     city.setName("Rancagua");
                     cityDAO.insert(city);
                 }
             }
             {
-                Country country =new Country();
+                Country country = new Country();
                 country.setName("Argentina");
                 countryDAO.insert(country);
                 {
-                    City city=new City();
+                    City city = new City();
                     city.setCountry(country);
                     city.setName("Buenos Aires");
                     cityDAO.insert(city);
                 }
                 {
-                    City city=new City();
+                    City city = new City();
                     city.setCountry(country);
                     city.setName("Cordoba");
                     cityDAO.insert(city);
                 }
             }
             {
-                Country country =new Country();
+                Country country = new Country();
                 country.setName("Peru");
                 countryDAO.insert(country);
                 {
-                    City city=new City();
+                    City city = new City();
                     city.setCountry(country);
                     city.setName("Lima");
                     cityDAO.insert(city);
                 }
                 {
-                    City city=new City();
+                    City city = new City();
                     city.setCountry(country);
                     city.setName("Tacna");
                     cityDAO.insert(city);
