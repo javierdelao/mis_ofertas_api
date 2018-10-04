@@ -4,21 +4,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(uniqueConstraints = {
-                @UniqueConstraint(name = "rol_name_unique", columnNames = {"name"})
-        })
-public class Rol implements Serializable, Bean, LazyCollectorBean{
+public class Country implements Serializable, Bean, LazyCollectorBean {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
+    @Basic
     @Column(length = 256, nullable = false)
     private String name;
 
-    @Column(length = 256, nullable = false)
-    private String description;
+
+    public Country() {
+    }
 
     @Override
     public Long getId() {
@@ -36,14 +34,6 @@ public class Rol implements Serializable, Bean, LazyCollectorBean{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     @Override

@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(indexes = {},
-        uniqueConstraints = {
+@Table(uniqueConstraints = {
                 @UniqueConstraint(name = "rut_unique", columnNames = {"rut"})
         })
 public class SystemUser implements Serializable, Bean, LazyCollectorBean{
@@ -36,6 +35,10 @@ public class SystemUser implements Serializable, Bean, LazyCollectorBean{
         @ManyToOne
         @JoinColumn(name="rol_id", nullable=false)
         private Rol rol;
+
+        @ManyToOne
+        @JoinColumn(name="store_id", nullable=false)
+        private Store store;
 
         public SystemUser() {
         }
@@ -96,6 +99,14 @@ public class SystemUser implements Serializable, Bean, LazyCollectorBean{
 
         public void setPassword(String password) {
                 this.password = password;
+        }
+
+        public Store getStore() {
+                return store;
+        }
+
+        public void setStore(Store store) {
+                this.store = store;
         }
 
         @Override

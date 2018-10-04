@@ -4,10 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(uniqueConstraints = {
-                @UniqueConstraint(name = "rol_name_unique", columnNames = {"name"})
-        })
-public class Rol implements Serializable, Bean, LazyCollectorBean{
+public class Commune implements Serializable, Bean, LazyCollectorBean{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,8 +14,12 @@ public class Rol implements Serializable, Bean, LazyCollectorBean{
     @Column(length = 256, nullable = false)
     private String name;
 
-    @Column(length = 256, nullable = false)
-    private String description;
+    @ManyToOne
+    @JoinColumn(name="city_id", nullable=false)
+    private City city;
+
+    public Commune() {
+    }
 
     @Override
     public Long getId() {
@@ -38,12 +39,12 @@ public class Rol implements Serializable, Bean, LazyCollectorBean{
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public City getCity() {
+        return city;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override
