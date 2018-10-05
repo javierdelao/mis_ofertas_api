@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Comment implements Serializable, Bean, LazyCollectorBean {
+public class Note implements Serializable, Bean, LazyCollectorBean {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,7 @@ public class Comment implements Serializable, Bean, LazyCollectorBean {
     private List<Document> documents;
 
 
-    public Comment() {
+    public Note() {
     }
 
     @Override

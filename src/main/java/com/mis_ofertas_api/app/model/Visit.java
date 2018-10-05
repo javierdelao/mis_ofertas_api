@@ -13,7 +13,7 @@ public class Visit implements Serializable, Bean, LazyCollectorBean {
 
 
     @Column(nullable = false)
-    private Date date;
+    private Date visitDate;
 
 
     @ManyToOne
@@ -53,12 +53,12 @@ public class Visit implements Serializable, Bean, LazyCollectorBean {
         this.systemUser = systemUser;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getVisitDate() {
+        return visitDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setVisitDate(Date visitDate) {
+        this.visitDate = visitDate;
     }
 
     @Override

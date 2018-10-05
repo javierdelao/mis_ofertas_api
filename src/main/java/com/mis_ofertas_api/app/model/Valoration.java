@@ -2,7 +2,6 @@ package com.mis_ofertas_api.app.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 public class Valoration implements Serializable, Bean, LazyCollectorBean {
@@ -26,7 +25,7 @@ public class Valoration implements Serializable, Bean, LazyCollectorBean {
 
     @OneToOne
     @JoinColumn(name = "comment_id", nullable = true)
-    private Comment comment;
+    private Note note;
 
     public Valoration() {
     }
@@ -65,12 +64,12 @@ public class Valoration implements Serializable, Bean, LazyCollectorBean {
         this.systemUser = systemUser;
     }
 
-    public Comment getComment() {
-        return comment;
+    public Note getNote() {
+        return note;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setNote(Note note) {
+        this.note = note;
     }
 
     @Override

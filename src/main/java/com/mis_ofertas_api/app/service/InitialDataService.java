@@ -297,7 +297,7 @@ public class InitialDataService {
 
 
                             Visit visit= new Visit();
-                            visit.setDate(new Date());
+                            visit.setVisitDate(new Date());
                             visit.setProduct(product);
                             visit.setSystemUser(user);
                             visitDAO.insert(visit);
@@ -313,19 +313,19 @@ public class InitialDataService {
                             documentDAO.insert(document2);
 
 
-                            Comment comment= new Comment();
-                            comment.setCommentDate(new Date());
-                            comment.setText("Comentario de prueba");
-                            comment.setDocuments(new ArrayList<Document>());
-                            comment.getDocuments().add(document);
-                            comment.getDocuments().add(document2);
-                            commentDAO.insert(comment);
+                            Note note = new Note();
+                            note.setCommentDate(new Date());
+                            note.setText("Comentario de prueba");
+                            note.setDocuments(new ArrayList<Document>());
+                            note.getDocuments().add(document);
+                            note.getDocuments().add(document2);
+                            commentDAO.insert(note);
 
                             Valoration valoration=new Valoration();
                             valoration.setProduct(product);
                             valoration.setSystemUser(user);
                             valoration.setValoration_star(4);
-                            valoration.setComment(comment);
+                            valoration.setNote(note);
                             valorationDAO.insert(valoration);
 
                             Valoration valorationDB=valorationDAO.valoration(valoration.getId());
