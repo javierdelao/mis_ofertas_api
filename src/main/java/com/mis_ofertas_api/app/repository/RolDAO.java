@@ -35,6 +35,23 @@ public class RolDAO extends BeanDAO<Rol> {
     }
 
     @Transactional(readOnly = true)
+    public Rol rol(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Rol> criteriaQuery = criteriaBuilder.createQuery(Rol.class);
+        Root<Rol> root = criteriaQuery.from(Rol.class);
+        Path<String> namePath = root.get("name");
+        criteriaQuery.select(root)
+                .where(criteriaBuilder.equal(namePath, name));
+        Query<Rol> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<Rol> rols() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
