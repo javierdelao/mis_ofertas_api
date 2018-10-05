@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Repository
 public class ValorationDAO extends BeanDAO<Valoration> {
@@ -28,9 +29,23 @@ public class ValorationDAO extends BeanDAO<Valoration> {
                 .where(criteriaBuilder.equal(idPath, id));
         Query<Valoration> query = session.createQuery(criteriaQuery);
         try {
-            Valoration valoration = query.getSingleResult();
-            return valoration;
+            return query.getSingleResult();
         }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Valoration> valorations() {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Valoration> criteriaQuery = criteriaBuilder.createQuery(Valoration.class);
+        Root<Valoration> root = criteriaQuery.from(Valoration.class);
+        criteriaQuery.select(root);
+        Query<Valoration> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getResultList();
+        } catch (Exception e) {
             return null;
         }
     }

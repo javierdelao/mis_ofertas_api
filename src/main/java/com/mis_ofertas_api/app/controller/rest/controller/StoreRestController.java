@@ -1,7 +1,7 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
-import com.mis_ofertas_api.app.model.Area;
-import com.mis_ofertas_api.app.repository.AreaDAO;
+import com.mis_ofertas_api.app.model.Store;
+import com.mis_ofertas_api.app.repository.StoreDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,31 +9,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/area")
-public class AreaRestController {
+@RequestMapping("/store")
+public class StoreRestController {
 
-    private AreaDAO areaDAO;
+    private StoreDAO storeDAO;
 
     @Autowired
-    public void setAreaDAO(AreaDAO areaDAO) {
-        this.areaDAO = areaDAO;
+    public void setStoreDAO(StoreDAO storeDAO) {
+        this.storeDAO = storeDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Area area(@PathVariable Long id) {
-        return areaDAO.area(id);
+    public Store store(@PathVariable Long id) {
+        return storeDAO.store(id);
     }
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public List<Area> areas() {
-        return areaDAO.areas();
+    public List<Store> stores() {
+        return storeDAO.stores();
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public Area create(@RequestBody Area area) {
+    public Store create(@RequestBody Store store) {
         try {
-            areaDAO.insert(area);
-            return area;
+            storeDAO.insert(store);
+            return store;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,10 +42,10 @@ public class AreaRestController {
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.PUT)
-    public Area edit(@RequestBody Area area) {
+    public Store edit(@RequestBody Store store) {
         try {
-            areaDAO.update(area);
-            return area;
+            storeDAO.update(store);
+            return store;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,9 +53,9 @@ public class AreaRestController {
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
-    public SuccessResponse delete(@RequestBody Area area) {
+    public SuccessResponse delete(@RequestBody Store store) {
         try {
-            areaDAO.update(area);
+            storeDAO.update(store);
             return new SuccessResponse(true, "success");
         } catch (Exception e) {
             return new SuccessResponse(true, e.getMessage());

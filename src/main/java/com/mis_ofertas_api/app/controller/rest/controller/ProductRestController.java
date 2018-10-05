@@ -1,7 +1,9 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
-import com.mis_ofertas_api.app.model.Area;
-import com.mis_ofertas_api.app.repository.AreaDAO;
+import com.mis_ofertas_api.app.model.OfferType;
+import com.mis_ofertas_api.app.model.Product;
+import com.mis_ofertas_api.app.repository.OfferTypeDAO;
+import com.mis_ofertas_api.app.repository.ProductDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,31 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/area")
-public class AreaRestController {
+@RequestMapping("/product")
+public class ProductRestController {
 
-    private AreaDAO areaDAO;
+    private ProductDAO productDAO;
 
     @Autowired
-    public void setAreaDAO(AreaDAO areaDAO) {
-        this.areaDAO = areaDAO;
+    public void setProductDAO(ProductDAO productDAO) {
+        this.productDAO = productDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Area area(@PathVariable Long id) {
-        return areaDAO.area(id);
+    public Product product(@PathVariable Long id) {
+        return productDAO.product(id);
     }
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public List<Area> areas() {
-        return areaDAO.areas();
+    public List<Product> products() {
+        return productDAO.products();
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public Area create(@RequestBody Area area) {
+    public Product create(@RequestBody Product product) {
         try {
-            areaDAO.insert(area);
-            return area;
+            productDAO.insert(product);
+            return product;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,10 +44,10 @@ public class AreaRestController {
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.PUT)
-    public Area edit(@RequestBody Area area) {
+    public Product edit(@RequestBody Product product) {
         try {
-            areaDAO.update(area);
-            return area;
+            productDAO.update(product);
+            return product;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,9 +55,9 @@ public class AreaRestController {
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
-    public SuccessResponse delete(@RequestBody Area area) {
+    public SuccessResponse delete(@RequestBody Product product) {
         try {
-            areaDAO.update(area);
+            productDAO.update(product);
             return new SuccessResponse(true, "success");
         } catch (Exception e) {
             return new SuccessResponse(true, e.getMessage());

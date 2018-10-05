@@ -1,7 +1,7 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
-import com.mis_ofertas_api.app.model.Area;
-import com.mis_ofertas_api.app.repository.AreaDAO;
+import com.mis_ofertas_api.app.model.Country;
+import com.mis_ofertas_api.app.repository.CountryDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,31 +9,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/area")
-public class AreaRestController {
+@RequestMapping("/country")
+public class CountryRestController {
 
-    private AreaDAO areaDAO;
+    private CountryDAO countryDAO;
 
     @Autowired
-    public void setAreaDAO(AreaDAO areaDAO) {
-        this.areaDAO = areaDAO;
+    public void setCountryDAO(CountryDAO countryDAO) {
+        this.countryDAO = countryDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Area area(@PathVariable Long id) {
-        return areaDAO.area(id);
+    public Country country(@PathVariable Long id) {
+        return countryDAO.country(id);
     }
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public List<Area> areas() {
-        return areaDAO.areas();
+    public List<Country> countries() {
+        return countryDAO.countries();
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public Area create(@RequestBody Area area) {
+    public Country create(@RequestBody Country country) {
         try {
-            areaDAO.insert(area);
-            return area;
+            countryDAO.insert(country);
+            return country;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,10 +42,10 @@ public class AreaRestController {
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.PUT)
-    public Area edit(@RequestBody Area area) {
+    public Country edit(@RequestBody Country country) {
         try {
-            areaDAO.update(area);
-            return area;
+            countryDAO.update(country);
+            return country;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,9 +53,9 @@ public class AreaRestController {
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
-    public SuccessResponse delete(@RequestBody Area area) {
+    public SuccessResponse delete(@RequestBody Country country) {
         try {
-            areaDAO.update(area);
+            countryDAO.update(country);
             return new SuccessResponse(true, "success");
         } catch (Exception e) {
             return new SuccessResponse(true, e.getMessage());

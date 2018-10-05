@@ -43,7 +43,7 @@ public class InitialDataService {
 
     private ValorationDAO valorationDAO;
 
-    private CommentDAO commentDAO;
+    private NoteDAO noteDAO;
 
     private DocumentDAO documentDAO;
 
@@ -127,8 +127,8 @@ public class InitialDataService {
     }
 
     @Autowired
-    public void setCommentDAO(CommentDAO commentDAO) {
-        this.commentDAO = commentDAO;
+    public void setNoteDAO(NoteDAO noteDAO) {
+        this.noteDAO = noteDAO;
     }
 
     @Autowired
@@ -319,7 +319,7 @@ public class InitialDataService {
                             note.setDocuments(new ArrayList<Document>());
                             note.getDocuments().add(document);
                             note.getDocuments().add(document2);
-                            commentDAO.insert(note);
+                            noteDAO.insert(note);
 
                             Valoration valoration=new Valoration();
                             valoration.setProduct(product);

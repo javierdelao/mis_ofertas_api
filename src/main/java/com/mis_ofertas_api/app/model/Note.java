@@ -26,8 +26,8 @@ public class Note implements Serializable, Bean, LazyCollectorBean {
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, orphanRemoval = true, fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinTable(
-            name = "comment_document",
-            joinColumns = @JoinColumn(name = "comment_id"),
+            name = "note_document",
+            joinColumns = @JoinColumn(name = "note_id"),
             inverseJoinColumns = @JoinColumn(name = "document_id")
     )
     private List<Document> documents;

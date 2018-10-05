@@ -1,8 +1,6 @@
 package com.mis_ofertas_api.app.repository;
 
-import com.mis_ofertas_api.app.model.Commune;
-import com.mis_ofertas_api.app.model.Country;
-import com.mis_ofertas_api.app.model.SystemUser;
+import com.mis_ofertas_api.app.model.Note;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -15,39 +13,40 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class CountryDAO extends BeanDAO<Country> {
+public class NoteDAO extends BeanDAO<Note> {
 
     @Transactional(readOnly = true)
-    public Country country(Long id) {
+    public Note note(Long id) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Country> criteriaQuery = criteriaBuilder.createQuery(Country.class);
-        Root<Country> root = criteriaQuery.from(Country.class);
+        CriteriaQuery<Note> criteriaQuery = criteriaBuilder.createQuery(Note.class);
+        Root<Note> root = criteriaQuery.from(Note.class);
         Path<Long> idPath = root.get("id");
         criteriaQuery.select(root)
                 .where(criteriaBuilder.equal(idPath, id));
-        Query<Country> query = session.createQuery(criteriaQuery);
+        Query<Note> query = session.createQuery(criteriaQuery);
         try {
-            Country country = query.getSingleResult();
-            return country;
+            Note note = query.getSingleResult();
+            return note;
         } catch (Exception e) {
             return null;
         }
     }
 
     @Transactional(readOnly = true)
-    public List<Country> countries() {
+    public List<Note> notes() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Country> criteriaQuery = criteriaBuilder.createQuery(Country.class);
-        Root<Country> root = criteriaQuery.from(Country.class);
+        CriteriaQuery<Note> criteriaQuery = criteriaBuilder.createQuery(Note.class);
+        Root<Note> root = criteriaQuery.from(Note.class);
         criteriaQuery.select(root);
-        Query<Country> query = session.createQuery(criteriaQuery);
+        Query<Note> query = session.createQuery(criteriaQuery);
         try {
             return query.getResultList();
         } catch (Exception e) {
             return null;
         }
     }
+
 
 }

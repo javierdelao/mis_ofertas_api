@@ -1,7 +1,9 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
-import com.mis_ofertas_api.app.model.Area;
-import com.mis_ofertas_api.app.repository.AreaDAO;
+import com.mis_ofertas_api.app.model.ProductType;
+import com.mis_ofertas_api.app.model.Rol;
+import com.mis_ofertas_api.app.repository.ProductTypeDAO;
+import com.mis_ofertas_api.app.repository.RolDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,31 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/area")
-public class AreaRestController {
+@RequestMapping("/rol")
+public class RolRestController {
 
-    private AreaDAO areaDAO;
+    private RolDAO rolDAO;
 
     @Autowired
-    public void setAreaDAO(AreaDAO areaDAO) {
-        this.areaDAO = areaDAO;
+    public void setRolDAO(RolDAO rolDAO) {
+        this.rolDAO = rolDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Area area(@PathVariable Long id) {
-        return areaDAO.area(id);
+    public Rol rol(@PathVariable Long id) {
+        return rolDAO.rol(id);
     }
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public List<Area> areas() {
-        return areaDAO.areas();
+    public List<Rol> rols() {
+        return rolDAO.rols();
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public Area create(@RequestBody Area area) {
+    public Rol create(@RequestBody Rol rol) {
         try {
-            areaDAO.insert(area);
-            return area;
+            rolDAO.insert(rol);
+            return rol;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,10 +44,10 @@ public class AreaRestController {
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.PUT)
-    public Area edit(@RequestBody Area area) {
+    public Rol edit(@RequestBody Rol rol) {
         try {
-            areaDAO.update(area);
-            return area;
+            rolDAO.update(rol);
+            return rol;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,9 +55,9 @@ public class AreaRestController {
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
-    public SuccessResponse delete(@RequestBody Area area) {
+    public SuccessResponse delete(@RequestBody Rol rol) {
         try {
-            areaDAO.update(area);
+            rolDAO.update(rol);
             return new SuccessResponse(true, "success");
         } catch (Exception e) {
             return new SuccessResponse(true, e.getMessage());
