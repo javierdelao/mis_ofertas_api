@@ -250,23 +250,98 @@ public class InitialDataService {
                             status.setDescription("Se encuentra disponible");
                             statusDAO.insert(status);
 
-                            Image image=new Image();
-                            image.setPath("test.jpg");
-                            imageDAO.insert(image);
+                            Image imagetThermo=new Image();
+                            imagetThermo.setPath("thermo.jpg");
+                            imageDAO.insert(imagetThermo);
 
                             Product product=new Product();
                             product.setUser(user);
                             product.setPublicationDate(new Date());
-                            product.setName("Notebook Toshiba (Test)");
-                            product.setDescription("Notebook de quinta generacion blabla blabla blabla");
+                            product.setName("Thermo");
+                            product.setDescription("Termo para lo que sea ");
                             product.setIs_perishable(false);
                             product.setExpirationDate(null);
-                            product.setPrice(500000);
+                            product.setPrice(15000);
                             product.setProductType(productType);
                             product.setArea(area);
                             product.setStatus(status);
-                            product.setImage(image);
+                            product.setImage(imagetThermo);
                             productDAO.insert(product);
+
+                            Image imageXbox=new Image();
+                            imageXbox.setPath("xbox.jpg");
+                            imageDAO.insert(imageXbox);
+
+                            Product productXbox=new Product();
+                            productXbox.setUser(user);
+                            productXbox.setPublicationDate(new Date());
+                            productXbox.setName("X-box Onew");
+                            productXbox.setDescription("La peor consola de todos los tiempos");
+                            productXbox.setIs_perishable(false);
+                            productXbox.setExpirationDate(null);
+                            productXbox.setPrice(300000);
+                            productXbox.setProductType(productType);
+                            productXbox.setArea(area);
+                            productXbox.setStatus(status);
+                            productXbox.setImage(imageXbox);
+                            productDAO.insert(productXbox);
+
+                            Image imageStiwch=new Image();
+                            imageStiwch.setPath("switch.jpg");
+                            imageDAO.insert(imageStiwch);
+
+                            Product productSwtich=new Product();
+                            productSwtich.setUser(user);
+                            productSwtich.setPublicationDate(new Date());
+                            productSwtich.setName("Nintendo Switch");
+                            productSwtich.setDescription("La primera gran consola hibrida");
+                            productSwtich.setIs_perishable(false);
+                            productSwtich.setExpirationDate(null);
+                            productSwtich.setPrice(300000);
+                            productSwtich.setProductType(productType);
+                            productSwtich.setArea(area);
+                            productSwtich.setStatus(status);
+                            productSwtich.setImage(imageStiwch);
+                            productDAO.insert(productSwtich);
+
+                            Image imageDes=new Image();
+                            imageDes.setPath("destapador.jpg");
+                            imageDAO.insert(imageDes);
+
+                            Product productDes=new Product();
+                            productDes.setUser(user);
+                            productDes.setPublicationDate(new Date());
+                            productDes.setName("Destapador comun y corriente");
+                            productDes.setDescription("Destapador comun y corriente");
+                            productDes.setIs_perishable(false);
+                            productDes.setExpirationDate(null);
+                            productDes.setPrice(5000);
+                            productDes.setProductType(productType);
+                            productDes.setArea(area);
+                            productDes.setStatus(status);
+                            productDes.setImage(imageDes);
+                            productDAO.insert(productDes);
+
+
+                            Image image2ds=new Image();
+                            image2ds.setPath("2ds.jpg");
+                            imageDAO.insert(image2ds);
+
+                            Product product2ds=new Product();
+                            product2ds.setUser(user);
+                            product2ds.setPublicationDate(new Date());
+                            product2ds.setName("2ds");
+                            product2ds.setDescription("2ds");
+                            product2ds.setIs_perishable(false);
+                            product2ds.setExpirationDate(null);
+                            product2ds.setPrice(150000);
+                            product2ds.setProductType(productType);
+                            product2ds.setArea(area);
+                            product2ds.setStatus(status);
+                            product2ds.setImage(image2ds);
+                            productDAO.insert(product2ds);
+
+
 
                             {
                                 OfferType offerType = new OfferType();
