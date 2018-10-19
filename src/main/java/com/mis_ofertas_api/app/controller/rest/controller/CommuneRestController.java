@@ -32,6 +32,7 @@ public class CommuneRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public Commune create(@RequestBody Commune commune) {
         try {
+            commune.setId(null);
             communeDAO.insert(commune);
             return commune;
         } catch (Exception e) {

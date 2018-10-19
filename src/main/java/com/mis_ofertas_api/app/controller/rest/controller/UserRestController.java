@@ -42,8 +42,11 @@ public class UserRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public SystemUser create(@RequestBody SystemUser systemUser) {
         try {
-            Rol rol=rolDAO.rol("CLIENT");
-            systemUser.setRol(rol);
+            if(systemUser.getRol()==null){
+                Rol rol=rolDAO.rol("CLIENT");
+                systemUser.setRol(rol);
+            }
+            systemUser.setId(null);
             userDAO.insert(systemUser);
             return systemUser;
         } catch (Exception e) {
