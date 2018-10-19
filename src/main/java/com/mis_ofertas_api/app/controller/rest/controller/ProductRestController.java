@@ -2,6 +2,7 @@ package com.mis_ofertas_api.app.controller.rest.controller;
 
 import com.mis_ofertas_api.app.model.OfferType;
 import com.mis_ofertas_api.app.model.Product;
+import com.mis_ofertas_api.app.repository.ImageDAO;
 import com.mis_ofertas_api.app.repository.OfferTypeDAO;
 import com.mis_ofertas_api.app.repository.ProductDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
@@ -16,9 +17,16 @@ public class ProductRestController {
 
     private ProductDAO productDAO;
 
+    private ImageDAO imageDAO;
+
     @Autowired
     public void setProductDAO(ProductDAO productDAO) {
         this.productDAO = productDAO;
+    }
+
+    @Autowired
+    public void setImageDAO(ImageDAO imageDAO) {
+        this.imageDAO = imageDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
@@ -34,6 +42,7 @@ public class ProductRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public Product create(@RequestBody Product product) {
         try {
+            imageDAO.insert(product.getImage());
             productDAO.insert(product);
             return product;
         } catch (Exception e) {
