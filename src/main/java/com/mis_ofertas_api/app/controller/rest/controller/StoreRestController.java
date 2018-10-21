@@ -41,7 +41,7 @@ public class StoreRestController {
 
     }
 
-    @RequestMapping(path = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public Store edit(@RequestBody Store store) {
         try {
             storeDAO.update(store);
