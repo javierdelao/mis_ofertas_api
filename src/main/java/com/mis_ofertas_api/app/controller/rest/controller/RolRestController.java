@@ -34,6 +34,7 @@ public class RolRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public Rol create(@RequestBody Rol rol) {
         try {
+            rol.setId(null);
             rolDAO.insert(rol);
             return rol;
         } catch (Exception e) {

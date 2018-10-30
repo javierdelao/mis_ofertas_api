@@ -32,6 +32,7 @@ public class CityRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public City create(@RequestBody City city) {
         try {
+            city.setId(null);
             cityDAO.insert(city);
             return city;
         } catch (Exception e) {
