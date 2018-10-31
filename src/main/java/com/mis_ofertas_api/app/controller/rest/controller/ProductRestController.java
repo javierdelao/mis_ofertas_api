@@ -73,7 +73,7 @@ public class ProductRestController {
 
     }
 
-    @RequestMapping(path = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public Product edit(@RequestBody Product product) {
         try {
             productDAO.update(product);

@@ -32,6 +32,7 @@ public class StoreRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public Store create(@RequestBody Store store) {
         try {
+
             storeDAO.insert(store);
             return store;
         } catch (Exception e) {
