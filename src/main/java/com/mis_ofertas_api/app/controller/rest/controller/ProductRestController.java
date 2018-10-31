@@ -1,9 +1,8 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
-import com.mis_ofertas_api.app.model.OfferType;
 import com.mis_ofertas_api.app.model.Product;
 import com.mis_ofertas_api.app.repository.ImageDAO;
-import com.mis_ofertas_api.app.repository.OfferTypeDAO;
+import com.mis_ofertas_api.app.repository.OfferDAO;
 import com.mis_ofertas_api.app.repository.ProductDAO;
 import com.mis_ofertas_api.app.repository.UserDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
@@ -22,6 +21,8 @@ public class ProductRestController {
 
     private UserDAO userDAO;
 
+    private OfferDAO offerDAO;
+
     @Autowired
     public void setProductDAO(ProductDAO productDAO) {
         this.productDAO = productDAO;
@@ -37,6 +38,11 @@ public class ProductRestController {
         this.userDAO = userDAO;
     }
 
+    @Autowired
+    public void setOfferDAO(OfferDAO offerDAO) {
+        this.offerDAO = offerDAO;
+    }
+
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Product product(@PathVariable Long id) {
         return productDAO.product(id);
@@ -44,7 +50,11 @@ public class ProductRestController {
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Product> products() {
-        return productDAO.products(null,false,false);
+        List<Product> products = productDAO.products(null, false, false);
+        for (Product product : products) {
+            product.setOffer(offerDAO.offer(product));
+        }
+        return products;
     }
 
     @RequestMapping(path = "/list/{userId}/{owner}/{active}", method = RequestMethod.GET)
@@ -52,12 +62,16 @@ public class ProductRestController {
             @PathVariable Long userId,
             @PathVariable Boolean owner,
             @PathVariable Boolean active) {
-
-        return productDAO.products(
+        List<Product> products = productDAO.products(
                 userDAO.systemUser(userId),
                 owner,
                 active
         );
+        for (Product product : products) {
+            product.setOffer(offerDAO.offer(product));
+        }
+
+        return products;
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
@@ -73,7 +87,7 @@ public class ProductRestController {
 
     }
 
-    @RequestMapping(path = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public Product edit(@RequestBody Product product) {
         try {
             productDAO.update(product);
