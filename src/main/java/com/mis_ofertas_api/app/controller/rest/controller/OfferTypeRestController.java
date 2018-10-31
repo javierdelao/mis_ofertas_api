@@ -41,7 +41,7 @@ public class OfferTypeRestController {
 
     }
 
-    @RequestMapping(path = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public OfferType edit(@RequestBody OfferType offerType) {
         try {
             offerTypeDAO.update(offerType);

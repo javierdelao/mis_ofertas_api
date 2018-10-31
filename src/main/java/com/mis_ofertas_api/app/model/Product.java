@@ -54,6 +54,10 @@ public class Product implements Serializable, Bean, LazyCollectorBean {
     private Status status;
 
 
+    @Transient
+    private Offer offer;
+
+
     public Product() {
     }
 
@@ -153,6 +157,14 @@ public class Product implements Serializable, Bean, LazyCollectorBean {
 
     public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 
     @Override
