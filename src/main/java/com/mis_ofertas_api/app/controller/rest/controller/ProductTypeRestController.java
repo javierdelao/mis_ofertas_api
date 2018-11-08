@@ -35,7 +35,7 @@ public class ProductTypeRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public ProductType create(@RequestBody ProductType productType) {
         try {
-            productType.setId(null);
+            //productType.setId(null);
             productTypeDAO.insert(productType);
             return productType;
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class ProductTypeRestController {
 
     }
 
-    @RequestMapping(path = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public ProductType edit(@RequestBody ProductType productType) {
         try {
             productTypeDAO.update(productType);
