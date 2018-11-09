@@ -55,7 +55,7 @@ public class ProductRestController {
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Product> products() {
-        areaDAO.areas2(new SystemUser());
+       // areaDAO.areas2(new SystemUser());
         List<Product> products = productDAO.products(null, false, false, null);
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
