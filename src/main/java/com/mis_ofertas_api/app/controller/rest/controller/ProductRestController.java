@@ -1,11 +1,11 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
 import com.mis_ofertas_api.app.model.Product;
-import com.mis_ofertas_api.app.repository.ImageDAO;
-import com.mis_ofertas_api.app.repository.OfferDAO;
-import com.mis_ofertas_api.app.repository.ProductDAO;
-import com.mis_ofertas_api.app.repository.UserDAO;
+import com.mis_ofertas_api.app.model.SystemUser;
+import com.mis_ofertas_api.app.repository.*;
 import com.mis_ofertas_api.app.response.SuccessResponse;
+import com.mis_ofertas_api.app.util.CustomProductList;
+import com.mis_ofertas_api.app.util.CustomProductListItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +22,8 @@ public class ProductRestController {
     private UserDAO userDAO;
 
     private OfferDAO offerDAO;
+
+    private AreaDAO areaDAO;
 
     @Autowired
     public void setProductDAO(ProductDAO productDAO) {
@@ -43,6 +45,11 @@ public class ProductRestController {
         this.offerDAO = offerDAO;
     }
 
+    @Autowired
+    public void setAreaDAO(AreaDAO areaDAO) {
+        this.areaDAO = areaDAO;
+    }
+
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Product product(@PathVariable Long id) {
         return productDAO.product(id);
@@ -50,7 +57,31 @@ public class ProductRestController {
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Product> products() {
-        List<Product> products = productDAO.products(null, false, false);
+        List<Product> products = productDAO.products(null, false, false, null);
+        for (Product product : products) {
+            product.setOffer(offerDAO.offer(product));
+        }
+        return products;
+    }
+
+    @RequestMapping(path = "/list/custom/{userId}", method = RequestMethod.GET)
+    public CustomProductList custom(@PathVariable Long userId) {
+
+        CustomProductList customProductList = areaDAO.areas(userDAO.systemUser(userId).getId());
+        for (CustomProductListItem customProductListItem : customProductList.getCustomProductListItems()) {
+            for (Product product : customProductListItem.getProducts()) {
+                product.setOffer(offerDAO.offer(product));
+            }
+        }
+
+
+        return customProductList;
+    }
+
+    @RequestMapping(path = "/list/{areaId}", method = RequestMethod.GET)
+    public List<Product> products(@PathVariable Long areaId) {
+        List<Product> products = productDAO.products(null, false, true, areaId);
+
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
         }
@@ -65,7 +96,8 @@ public class ProductRestController {
         List<Product> products = productDAO.products(
                 userDAO.systemUser(userId),
                 owner,
-                active
+                active,
+                null
         );
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
