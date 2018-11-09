@@ -1,9 +1,6 @@
 package com.mis_ofertas_api.app.repository;
 
-import com.mis_ofertas_api.app.model.Area;
-import com.mis_ofertas_api.app.model.Product;
-import com.mis_ofertas_api.app.model.Status;
-import com.mis_ofertas_api.app.model.SystemUser;
+import com.mis_ofertas_api.app.model.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -35,7 +32,7 @@ public class ProductDAO extends BeanDAO<Product> {
     }
 
     @Transactional(readOnly = true)
-    public List<Product> products(SystemUser user, Boolean owner, Boolean active, Long areaId) {
+    public List<Product> products(SystemUser user, Boolean owner, Boolean active, Long areaId,Long storeId) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
@@ -63,6 +60,16 @@ public class ProductDAO extends BeanDAO<Product> {
                 predicate = criteriaBuilder.and(criteriaBuilder.equal(areaIdPath, areaId));
             }
         }
+        if (storeId != null) {
+            Path<SystemUser> userPath = root.get("user");
+            Path<Store> storePath = userPath.get("store");
+            Path<Long> storeIdpath = storePath.get("id");
+            if (predicate != null) {
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(storeIdpath, storeId));
+            } else {
+                predicate = criteriaBuilder.and(criteriaBuilder.equal(storeIdpath, storeId));
+            }
+        }
         if (predicate != null) {
             criteriaQuery.select(root).where(predicate);
         } else {
@@ -70,7 +77,9 @@ public class ProductDAO extends BeanDAO<Product> {
         }
         Query<Product> query = session.createQuery(criteriaQuery);
         try {
-            return query.getResultList();
+            List<Product> products=query.getResultList();
+            System.out.println(products.size());
+            return products;
         } catch (Exception e) {
             return null;
         }

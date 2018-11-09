@@ -1,6 +1,8 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
+import com.mis_ofertas_api.app.model.Product;
 import com.mis_ofertas_api.app.model.Store;
+import com.mis_ofertas_api.app.repository.ProductDAO;
 import com.mis_ofertas_api.app.repository.StoreDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,16 @@ public class StoreRestController {
 
     private StoreDAO storeDAO;
 
+    private ProductDAO productDAO;
+
     @Autowired
     public void setStoreDAO(StoreDAO storeDAO) {
         this.storeDAO = storeDAO;
+    }
+
+    @Autowired
+    public void setProductDAO(ProductDAO productDAO) {
+        this.productDAO = productDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
@@ -27,6 +36,11 @@ public class StoreRestController {
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Store> stores() {
         return storeDAO.stores();
+    }
+
+    @RequestMapping(path = "/products/{storeId}", method = RequestMethod.GET)
+    public List<Product> products(@PathVariable Long storeId) {
+        return productDAO.products(null,false,true,null,storeId);
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
@@ -40,6 +54,8 @@ public class StoreRestController {
         return null;
 
     }
+
+
 
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public Store edit(@RequestBody Store store) {

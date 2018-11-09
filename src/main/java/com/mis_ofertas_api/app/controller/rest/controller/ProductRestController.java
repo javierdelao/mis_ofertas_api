@@ -56,7 +56,7 @@ public class ProductRestController {
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Product> products() {
         areaDAO.areas2(new SystemUser());
-        List<Product> products = productDAO.products(null, false, false, null);
+        List<Product> products = productDAO.products(null, false, false, null, null);
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
         }
@@ -65,7 +65,7 @@ public class ProductRestController {
 
     @RequestMapping(path = "/list/{areaId}", method = RequestMethod.GET)
     public List<Product> products(@PathVariable Long areaId) {
-        List<Product> products = productDAO.products(null, false, false, areaId);
+        List<Product> products = productDAO.products(null, false, false, areaId, null);
 
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
@@ -82,6 +82,7 @@ public class ProductRestController {
                 userDAO.systemUser(userId),
                 owner,
                 active,
+                null,
                 null
         );
         for (Product product : products) {
