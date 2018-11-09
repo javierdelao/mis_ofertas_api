@@ -72,8 +72,6 @@ public class ProductRestController {
                 product.setOffer(offerDAO.offer(product));
             }
         }
-
-
         return customProductList;
     }
 
