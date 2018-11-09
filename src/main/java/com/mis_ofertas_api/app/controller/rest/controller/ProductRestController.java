@@ -80,7 +80,7 @@ public class ProductRestController {
 
     @RequestMapping(path = "/list/{areaId}", method = RequestMethod.GET)
     public List<Product> products(@PathVariable Long areaId) {
-        List<Product> products = productDAO.products(null, false, true, areaId);
+        List<Product> products = productDAO.products(null, false, true,null, areaId);
 
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
