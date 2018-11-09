@@ -1,7 +1,6 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
 import com.mis_ofertas_api.app.model.Product;
-import com.mis_ofertas_api.app.model.SystemUser;
 import com.mis_ofertas_api.app.repository.*;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import com.mis_ofertas_api.app.util.CustomProductList;
@@ -57,7 +56,7 @@ public class ProductRestController {
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Product> products() {
-        List<Product> products = productDAO.products(null, false, false, null);
+        List<Product> products = productDAO.products(null, false, false, null, null);
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
         }
@@ -73,14 +72,12 @@ public class ProductRestController {
                 product.setOffer(offerDAO.offer(product));
             }
         }
-
-
         return customProductList;
     }
 
     @RequestMapping(path = "/list/{areaId}", method = RequestMethod.GET)
     public List<Product> products(@PathVariable Long areaId) {
-        List<Product> products = productDAO.products(null, false, true, areaId);
+        List<Product> products = productDAO.products(null, false, true, areaId, null);
 
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
@@ -97,6 +94,7 @@ public class ProductRestController {
                 userDAO.systemUser(userId),
                 owner,
                 active,
+                null,
                 null
         );
         for (Product product : products) {
