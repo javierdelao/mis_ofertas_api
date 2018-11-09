@@ -32,6 +32,7 @@ public class CountryRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public Country create(@RequestBody Country country) {
         try {
+            country.setId(null);
             countryDAO.insert(country);
             return country;
         } catch (Exception e) {

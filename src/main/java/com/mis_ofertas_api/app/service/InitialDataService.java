@@ -234,8 +234,8 @@ public class InitialDataService {
                             areaDAO.insert(area);
 
                             ProductType productType=new ProductType();
-                            productType.setName("no me acuerdo");
-                            productType.setDescription("no me acuerdo");
+                            productType.setName("Arroz");
+                            productType.setDescription("arroz");
                             productTypeDAO.insert(productType);
 
                             {
