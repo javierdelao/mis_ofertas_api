@@ -4,6 +4,8 @@ import com.mis_ofertas_api.app.model.Product;
 import com.mis_ofertas_api.app.model.SystemUser;
 import com.mis_ofertas_api.app.repository.*;
 import com.mis_ofertas_api.app.response.SuccessResponse;
+import com.mis_ofertas_api.app.util.CustomProductList;
+import com.mis_ofertas_api.app.util.CustomProductListItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +57,6 @@ public class ProductRestController {
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Product> products() {
-       // areaDAO.areas2(new SystemUser());
         List<Product> products = productDAO.products(null, false, false, null);
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
@@ -63,9 +64,23 @@ public class ProductRestController {
         return products;
     }
 
+    @RequestMapping(path = "/list/custom/{userId}", method = RequestMethod.GET)
+    public CustomProductList custom(@PathVariable Long userId) {
+
+        CustomProductList customProductList = areaDAO.areas(userDAO.systemUser(userId).getId());
+        for (CustomProductListItem customProductListItem : customProductList.getCustomProductListItems()) {
+            for (Product product : customProductListItem.getProducts()) {
+                product.setOffer(offerDAO.offer(product));
+            }
+        }
+
+
+        return customProductList;
+    }
+
     @RequestMapping(path = "/list/{areaId}", method = RequestMethod.GET)
     public List<Product> products(@PathVariable Long areaId) {
-        List<Product> products = productDAO.products(null, false, false, areaId);
+        List<Product> products = productDAO.products(null, false, true, areaId);
 
         for (Product product : products) {
             product.setOffer(offerDAO.offer(product));
