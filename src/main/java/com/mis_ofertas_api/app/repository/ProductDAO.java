@@ -126,9 +126,11 @@ public class ProductDAO extends BeanDAO<Product> {
         Path<Status> statuspath = root.get("status");
         Path<String> namePath = statuspath.get("name");
         Predicate predicate = criteriaBuilder.and(
-                criteriaBuilder.not(root.get("id").in(productIds)),
                 criteriaBuilder.equal(namePath,"Activo")
         );
+        if(productIds!=null && productIds.size()>0){
+            predicate=criteriaBuilder.and(predicate,criteriaBuilder.not(root.get("id").in(productIds)));
+        }
         criteriaQuery.select(root).where(predicate).orderBy(criteriaBuilder.desc(publicationDate));
         Query<Product> query = session.createQuery(criteriaQuery);
 
