@@ -188,11 +188,16 @@ public class InitialDataService {
                         commune.setName("Providencia");
                         communeDAO.insert(commune);
 
+                        Image imageRipley=new Image();
+                        imageRipley.setPath("ripley.jpg");
+                        imageDAO.insert(imageRipley);
+
                         {
                             Store store = new Store();
                             store.setCommune(commune);
                             store.setDirection("Avenida providencia #123");
                             store.setName("Ripley SA");
+                            store.setImage(imageRipley);
                             storeDAO.insert(store);
                         }
 
@@ -201,6 +206,7 @@ public class InitialDataService {
                             store.setCommune(commune);
                             store.setDirection("Antonio varas #666");
                             store.setName("Duoc UC");
+                            store.setImage(imageRipley);
                             storeDAO.insert(store);
                         }
 
@@ -209,6 +215,7 @@ public class InitialDataService {
                             store.setCommune(commune);
                             store.setDirection("Manuel montt #321");
                             store.setName("Mis ofertas LTDA.");
+                            store.setImage(imageRipley);
                             storeDAO.insert(store);
 
                             SystemUser user = new SystemUser();

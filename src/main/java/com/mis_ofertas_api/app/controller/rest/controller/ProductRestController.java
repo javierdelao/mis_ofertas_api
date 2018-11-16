@@ -144,6 +144,11 @@ public class ProductRestController {
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public Product edit(@RequestBody Product product) {
         try {
+            if(product.getImage()!=null){
+                if(product.getImage().getId()==null){
+                    imageDAO.insert(product.getImage());
+                }
+            }
             productDAO.update(product);
             return product;
         } catch (Exception e) {
