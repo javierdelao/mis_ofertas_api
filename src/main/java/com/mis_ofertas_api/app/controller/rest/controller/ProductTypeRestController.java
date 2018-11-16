@@ -32,6 +32,11 @@ public class ProductTypeRestController {
         return productTypeDAO.productTypes();
     }
 
+    @RequestMapping(path = "/list/{textSearch}", method = RequestMethod.GET)
+    public List<ProductType> productTypes(@PathVariable String textSearch) {
+        return productTypeDAO.productTypes(textSearch);
+    }
+
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public ProductType create(@RequestBody ProductType productType) {
         try {

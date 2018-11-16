@@ -21,6 +21,10 @@ public class Store implements Serializable, Bean, LazyCollectorBean{
     @JoinColumn(name="commune_id", nullable=false)
     private Commune commune;
 
+    @ManyToOne
+    @JoinColumn(name = "image_id", nullable = false)
+    private Image image;
+
     public Store() {
     }
 
@@ -56,6 +60,14 @@ public class Store implements Serializable, Bean, LazyCollectorBean{
 
     public void setCommune(Commune commune) {
         this.commune = commune;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override

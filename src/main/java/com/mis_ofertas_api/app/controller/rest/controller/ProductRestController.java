@@ -104,6 +104,30 @@ public class ProductRestController {
         return products;
     }
 
+    @RequestMapping(path = "/list/{userId}/{owner}/{activeId}/{areaId}/{productTypeId}/{textSearch}", method = RequestMethod.GET)
+    public List<Product> products(
+            @PathVariable Long userId,
+            @PathVariable Boolean owner,
+            @PathVariable Long activeId,
+            @PathVariable Long areaId,
+            @PathVariable Long productTypeId,
+            @PathVariable String textSearch) {
+        List<Product> products = productDAO.products(
+                userDAO.systemUser(userId),
+                owner,
+                activeId,
+                areaId,
+                null,
+                productTypeId,
+                textSearch
+        );
+        for (Product product : products) {
+            product.setOffer(offerDAO.offer(product));
+        }
+
+        return products;
+    }
+
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public Product create(@RequestBody Product product) {
         try {
@@ -120,6 +144,11 @@ public class ProductRestController {
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public Product edit(@RequestBody Product product) {
         try {
+            if(product.getImage()!=null){
+                if(product.getImage().getId()==null){
+                    imageDAO.insert(product.getImage());
+                }
+            }
             productDAO.update(product);
             return product;
         } catch (Exception e) {
