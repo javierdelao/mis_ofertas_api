@@ -38,9 +38,14 @@ public class StoreRestController {
         return storeDAO.stores();
     }
 
+    @RequestMapping(path = "/list/{communeId}/{textSearch}", method = RequestMethod.GET)
+    public List<Store> stores(@PathVariable Long communeId, @PathVariable String textSearch) {
+        return storeDAO.stores(communeId, textSearch);
+    }
+
     @RequestMapping(path = "/products/{storeId}", method = RequestMethod.GET)
     public List<Product> products(@PathVariable Long storeId) {
-        return productDAO.products(null,false,true,null,storeId);
+        return productDAO.products(null, false, true, null, storeId);
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
@@ -55,7 +60,6 @@ public class StoreRestController {
         return null;
 
     }
-
 
 
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
