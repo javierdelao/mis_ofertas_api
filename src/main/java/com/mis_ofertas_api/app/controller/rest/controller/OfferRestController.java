@@ -1,7 +1,9 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
 import com.mis_ofertas_api.app.model.Offer;
+import com.mis_ofertas_api.app.model.Product;
 import com.mis_ofertas_api.app.repository.OfferDAO;
+import com.mis_ofertas_api.app.repository.ProductDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,16 @@ public class OfferRestController {
 
     private OfferDAO offerDAO;
 
+    private ProductDAO productDAO;
+
     @Autowired
     public void setOfferDAO(OfferDAO offerDAO) {
         this.offerDAO = offerDAO;
+    }
+
+    @Autowired
+    public void setProductDAO(ProductDAO productDAO) {
+        this.productDAO = productDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
@@ -27,6 +36,12 @@ public class OfferRestController {
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Offer> offers() {
         return offerDAO.offers();
+    }
+
+    @RequestMapping(path = "/history/{productId}", method = RequestMethod.GET)
+    public List<Offer> offerHistory(@PathVariable Long productId) {
+        Product product=productDAO.product(productId);
+        return offerDAO.offerHistory(product);
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)

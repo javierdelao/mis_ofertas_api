@@ -23,10 +23,6 @@ public class Valoration implements Serializable, Bean, LazyCollectorBean {
     @JoinColumn(name = "user_id", nullable = false)
     private SystemUser systemUser;
 
-    @OneToOne
-    @JoinColumn(name = "comment_id", nullable = true)
-    private Note note;
-
     public Valoration() {
     }
 
@@ -62,14 +58,6 @@ public class Valoration implements Serializable, Bean, LazyCollectorBean {
 
     public void setSystemUser(SystemUser systemUser) {
         this.systemUser = systemUser;
-    }
-
-    public Note getNote() {
-        return note;
-    }
-
-    public void setNote(Note note) {
-        this.note = note;
     }
 
     @Override
