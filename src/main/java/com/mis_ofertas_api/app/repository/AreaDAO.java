@@ -151,5 +151,37 @@ public class AreaDAO extends BeanDAO<Area> {
 
     }
 
+    @Transactional(readOnly = true)
+    public List<Area> areas(String textSearch) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Area> criteriaQuery = criteriaBuilder.createQuery(Area.class);
+        Root<Area> root = criteriaQuery.from(Area.class);
 
+        Predicate predicate = null;
+        if (textSearch != null && !textSearch.equals("") && !textSearch.equals("null")) {
+            Path<String> namePath = root.get("name");
+            Path<String> descriptionPath = root.get("description");
+            Predicate predicateAux = criteriaBuilder.or(
+                    criteriaBuilder.like(criteriaBuilder.lower(namePath), "%" + textSearch.toLowerCase() + "%"),
+                    criteriaBuilder.like(criteriaBuilder.lower(descriptionPath), "%" + textSearch.toLowerCase() + "%")
+            );
+            if (predicate != null) {
+                predicate = criteriaBuilder.and(predicate, predicateAux);
+            } else {
+                predicate = criteriaBuilder.and(predicateAux);
+            }
+        }
+        if (predicate != null) {
+            criteriaQuery.select(root).where(predicate);
+        } else {
+            criteriaQuery.select(root);
+        }
+        Query<Area> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
