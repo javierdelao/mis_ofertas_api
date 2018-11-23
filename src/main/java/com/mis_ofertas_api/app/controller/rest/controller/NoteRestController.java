@@ -1,7 +1,9 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
 import com.mis_ofertas_api.app.model.Note;
+import com.mis_ofertas_api.app.model.Product;
 import com.mis_ofertas_api.app.repository.NoteDAO;
+import com.mis_ofertas_api.app.repository.ProductDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,16 @@ public class NoteRestController {
 
     private NoteDAO noteDAO;
 
+    private ProductDAO productDAO;
+
     @Autowired
     public void setNoteDAO(NoteDAO noteDAO) {
         this.noteDAO = noteDAO;
+    }
+
+    @Autowired
+    public void setProductDAO(ProductDAO productDAO) {
+        this.productDAO = productDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
@@ -27,6 +36,12 @@ public class NoteRestController {
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Note> notes() {
         return noteDAO.notes();
+    }
+
+    @RequestMapping(path = "/product/{productId}", method = RequestMethod.GET)
+    public List<Note> notes(@PathVariable Long productId) {
+        Product product=productDAO.product(productId);
+        return noteDAO.notes(product);
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)

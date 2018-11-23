@@ -60,6 +60,25 @@ public class OfferDAO extends BeanDAO<Offer> {
     }
 
     @Transactional(readOnly = true)
+    public List<Offer> offerHistory(Product product) {
+        Date date = new Date();
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Offer> criteriaQuery = criteriaBuilder.createQuery(Offer.class);
+        Root<Offer> root = criteriaQuery.from(Offer.class);
+        Path<Product> productPath = root.get("product");
+        criteriaQuery.select(root)
+                .where(criteriaBuilder.and(
+                        criteriaBuilder.equal(productPath, product)));
+        Query<Offer> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<Offer> offers() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();

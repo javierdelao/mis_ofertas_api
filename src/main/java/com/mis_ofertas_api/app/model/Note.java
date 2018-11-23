@@ -23,6 +23,18 @@ public class Note implements Serializable, Bean, LazyCollectorBean {
     @Column(nullable = false)
     private Date commentDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private SystemUser systemUser;
+
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @Transient
+    private Valoration valoration;
+
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, orphanRemoval = true, fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinTable(
@@ -68,6 +80,30 @@ public class Note implements Serializable, Bean, LazyCollectorBean {
 
     public void setDocuments(List<Document> documents) {
         this.documents = documents;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public SystemUser getSystemUser() {
+        return systemUser;
+    }
+
+    public void setSystemUser(SystemUser systemUser) {
+        this.systemUser = systemUser;
+    }
+
+    public Valoration getValoration() {
+        return valoration;
+    }
+
+    public void setValoration(Valoration valoration) {
+        this.valoration = valoration;
     }
 
     @Override

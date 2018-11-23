@@ -172,6 +172,98 @@ public class InitialDataService {
                 country.setName("Chile");
                 countryDAO.insert(country);
                 {
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Arica");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Iquique");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Antofagasta");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Copiapo");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Vallenar");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("La serena");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Valparaiso");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Rancagua");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Talca");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Chillan");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Temuco");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Valdivia");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Osorno");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Puerto montt");
+                        cityDAO.insert(city);
+                    }
+                    {
+                        City city = new City();
+                        city.setCountry(country);
+                        city.setName("Punta arenas");
+                        cityDAO.insert(city);
+                    }
+
+
                     City city = new City();
                     city.setCountry(country);
                     city.setName("Santiago");
@@ -399,6 +491,8 @@ public class InitialDataService {
                             note.setCommentDate(new Date());
                             note.setText("Comentario de prueba");
                             note.setDocuments(new ArrayList<Document>());
+                            note.setSystemUser(user);
+                            note.setProduct(product);
                             note.getDocuments().add(document);
                             note.getDocuments().add(document2);
                             noteDAO.insert(note);
@@ -407,7 +501,6 @@ public class InitialDataService {
                             valoration.setProduct(product);
                             valoration.setSystemUser(user);
                             valoration.setValoration_star(4);
-                            valoration.setNote(note);
                             valorationDAO.insert(valoration);
 
                             Valoration valorationDB=valorationDAO.valoration(valoration.getId());
