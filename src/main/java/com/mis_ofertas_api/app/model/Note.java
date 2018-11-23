@@ -32,6 +32,9 @@ public class Note implements Serializable, Bean, LazyCollectorBean {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Transient
+    private Valoration valoration;
+
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, orphanRemoval = true, fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinTable(
@@ -93,6 +96,14 @@ public class Note implements Serializable, Bean, LazyCollectorBean {
 
     public void setSystemUser(SystemUser systemUser) {
         this.systemUser = systemUser;
+    }
+
+    public Valoration getValoration() {
+        return valoration;
+    }
+
+    public void setValoration(Valoration valoration) {
+        this.valoration = valoration;
     }
 
     @Override

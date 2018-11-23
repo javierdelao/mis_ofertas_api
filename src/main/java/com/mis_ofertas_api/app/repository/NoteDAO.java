@@ -1,6 +1,7 @@
 package com.mis_ofertas_api.app.repository;
 
 import com.mis_ofertas_api.app.model.Note;
+import com.mis_ofertas_api.app.model.Product;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -40,6 +41,22 @@ public class NoteDAO extends BeanDAO<Note> {
         CriteriaQuery<Note> criteriaQuery = criteriaBuilder.createQuery(Note.class);
         Root<Note> root = criteriaQuery.from(Note.class);
         criteriaQuery.select(root);
+        Query<Note> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Note> notes(Product product) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Note> criteriaQuery = criteriaBuilder.createQuery(Note.class);
+        Root<Note> root = criteriaQuery.from(Note.class);
+        Path<Product>productPath=root.get("product");
+        criteriaQuery.select(root).where(criteriaBuilder.equal(productPath,product));
         Query<Note> query = session.createQuery(criteriaQuery);
         try {
             return query.getResultList();
