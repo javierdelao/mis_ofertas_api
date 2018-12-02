@@ -24,6 +24,11 @@ public class AreaRestController {
         return areaDAO.area(id);
     }
 
+    @RequestMapping(path = "/list/{textSearch}", method = RequestMethod.GET)
+    public List<Area> areas(@PathVariable String textSearch) {
+        return areaDAO.areas(textSearch);
+    }
+
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Area> areas() {
         return areaDAO.areas();
@@ -32,6 +37,7 @@ public class AreaRestController {
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public Area create(@RequestBody Area area) {
         try {
+            area.setId(null);
             areaDAO.insert(area);
             return area;
         } catch (Exception e) {
@@ -41,7 +47,7 @@ public class AreaRestController {
 
     }
 
-    @RequestMapping(path = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public Area edit(@RequestBody Area area) {
         try {
             areaDAO.update(area);
