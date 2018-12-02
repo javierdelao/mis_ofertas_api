@@ -1,6 +1,7 @@
 package com.mis_ofertas_api.app.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -39,6 +40,10 @@ public class SystemUser implements Serializable, Bean, LazyCollectorBean{
         @ManyToOne
         @JoinColumn(name="store_id", nullable=true)
         private Store store;
+
+        @Basic
+        @NotNull
+        private Integer points;
 
         public SystemUser() {
         }
