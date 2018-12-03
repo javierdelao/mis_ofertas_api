@@ -313,6 +313,8 @@ public class InitialDataService {
                             SystemUser user = new SystemUser();
                             user.setFirstName("Javier");
                             user.setLastName("De la o");
+                            user.setPoints(0);
+                            user.setAvatar("avatar0.jpg");
                             user.setRol(rolAdmin);
                             user.setRut("18429403-6");
                             user.setEmail("j.delao@alumnos.duoc.cl");

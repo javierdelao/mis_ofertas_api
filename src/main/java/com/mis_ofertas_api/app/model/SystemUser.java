@@ -45,6 +45,10 @@ public class SystemUser implements Serializable, Bean, LazyCollectorBean{
         @NotNull
         private Integer points;
 
+        @Basic
+        @NotNull
+        private String avatar;
+
         public SystemUser() {
         }
 
@@ -112,6 +116,22 @@ public class SystemUser implements Serializable, Bean, LazyCollectorBean{
 
         public void setStore(Store store) {
                 this.store = store;
+        }
+
+        public Integer getPoints() {
+                return points;
+        }
+
+        public String getAvatar() {
+                return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+                this.avatar = avatar;
+        }
+
+        public void setPoints(Integer points) {
+                this.points = points;
         }
 
         @Override

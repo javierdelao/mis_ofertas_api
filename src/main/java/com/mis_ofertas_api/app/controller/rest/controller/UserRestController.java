@@ -56,7 +56,7 @@ public class UserRestController {
 
     }
 
-    @RequestMapping(path = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public SystemUser edit(@RequestBody SystemUser systemUser) {
         try {
             userDAO.update(systemUser);
