@@ -281,7 +281,7 @@ public class InitialDataService {
                         communeDAO.insert(commune);
 
                         Image imageRipley=new Image();
-                        imageRipley.setPath("ripley.jpg");
+                        imageRipley.setPath("https://res.cloudinary.com/duzvu8wmg/image/upload/v1544046444/images/20477230ripley.png");
                         imageDAO.insert(imageRipley);
 
                         {
@@ -352,7 +352,7 @@ public class InitialDataService {
                             statusDAO.insert(status);
 
                             Image imagetThermo=new Image();
-                            imagetThermo.setPath("thermo.jpg");
+                            imagetThermo.setPath("https://res.cloudinary.com/duzvu8wmg/image/upload/v1544046449/images/thermo.jpg");
                             imageDAO.insert(imagetThermo);
 
                             Product product=new Product();
@@ -370,7 +370,7 @@ public class InitialDataService {
                             productDAO.insert(product);
 
                             Image imageXbox=new Image();
-                            imageXbox.setPath("xbox.jpg");
+                            imageXbox.setPath("https://res.cloudinary.com/duzvu8wmg/image/upload/v1544046449/images/xbox.jpg");
                             imageDAO.insert(imageXbox);
 
                             Product productXbox=new Product();
@@ -388,7 +388,7 @@ public class InitialDataService {
                             productDAO.insert(productXbox);
 
                             Image imageStiwch=new Image();
-                            imageStiwch.setPath("switch.jpg");
+                            imageStiwch.setPath("https://res.cloudinary.com/duzvu8wmg/image/upload/v1544046448/images/switch.jpg");
                             imageDAO.insert(imageStiwch);
 
                             Product productSwtich=new Product();
@@ -406,7 +406,7 @@ public class InitialDataService {
                             productDAO.insert(productSwtich);
 
                             Image imageDes=new Image();
-                            imageDes.setPath("destapador.jpg");
+                            imageDes.setPath("https://res.cloudinary.com/duzvu8wmg/image/upload/v1544046444/images/destapador.jpg");
                             imageDAO.insert(imageDes);
 
                             Product productDes=new Product();
@@ -425,7 +425,7 @@ public class InitialDataService {
 
 
                             Image image2ds=new Image();
-                            image2ds.setPath("2ds.jpg");
+                            image2ds.setPath("https://res.cloudinary.com/duzvu8wmg/image/upload/v1544046443/images/2ds.jpg");
                             imageDAO.insert(image2ds);
 
                             Product product2ds=new Product();
