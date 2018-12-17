@@ -3,6 +3,7 @@ package com.mis_ofertas_api.app.repository;
 import com.mis_ofertas_api.app.model.Product;
 import com.mis_ofertas_api.app.model.Valoration;
 import com.mis_ofertas_api.app.model.Visit;
+import com.mis_ofertas_api.app.util.VisitReport;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +52,31 @@ public class VisitDAO extends BeanDAO<Visit> {
         }catch (Exception e){
             throw e;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<VisitReport> qta2(List<Product>products) {
+        Session session = sessionFactory.getCurrentSession();
+        List<VisitReport> visitReports = new ArrayList<>();
+        for(Product product:products){
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Visit> criteriaQuery = criteriaBuilder.createQuery(Visit.class);
+            Root<Visit> root = criteriaQuery.from(Visit.class);
+            Path<Product> productPath = root.get("product");
+            criteriaQuery.select(root)
+                    .where(criteriaBuilder.equal(productPath, product));
+            Query<Visit> query = session.createQuery(criteriaQuery);
+            try {
+                List<Visit>visits=query.getResultList();
+                VisitReport visitReport = new VisitReport();
+                visitReport.setProduct(product);
+                visitReport.setVisitQta(visits.size());
+                visitReports.add(visitReport);
+            }catch (Exception e){
+                throw e;
+            }
+        }
+        return visitReports;
     }
 
     @Transactional(readOnly = true)

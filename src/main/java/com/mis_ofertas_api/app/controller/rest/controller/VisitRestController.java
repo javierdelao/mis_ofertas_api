@@ -1,8 +1,13 @@
 package com.mis_ofertas_api.app.controller.rest.controller;
 
+import com.mis_ofertas_api.app.model.Product;
+import com.mis_ofertas_api.app.model.SystemUser;
 import com.mis_ofertas_api.app.model.Visit;
+import com.mis_ofertas_api.app.repository.ProductDAO;
+import com.mis_ofertas_api.app.repository.UserDAO;
 import com.mis_ofertas_api.app.repository.VisitDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
+import com.mis_ofertas_api.app.util.VisitReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +21,23 @@ public class VisitRestController {
 
     private VisitDAO visitDAO;
 
+    private UserDAO userDAO;
+
+    private ProductDAO productDAO;
+
     @Autowired
     public void setVisitDAO(VisitDAO visitDAO) {
         this.visitDAO = visitDAO;
+    }
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    @Autowired
+    public void setProductDAO(ProductDAO productDAO) {
+        this.productDAO = productDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
@@ -67,6 +86,18 @@ public class VisitRestController {
     public List<Visit> qta(@PathVariable Long productId) {
         try {
            return visitDAO.qta(productId);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @RequestMapping(path = "/qta2/{systemUserId}", method = RequestMethod.GET)
+    public List<VisitReport> qta2(@PathVariable Long systemUserId) {
+        try {
+            SystemUser systemUser=userDAO.systemUser(systemUserId);
+            List<Product>products=productDAO.products(systemUser,true,null,null,null,null,null);
+
+            return visitDAO.qta2(products);
         } catch (Exception e) {
             throw e;
         }

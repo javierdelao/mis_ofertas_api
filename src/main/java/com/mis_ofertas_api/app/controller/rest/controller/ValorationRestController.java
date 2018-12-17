@@ -7,9 +7,11 @@ import com.mis_ofertas_api.app.repository.ProductDAO;
 import com.mis_ofertas_api.app.repository.UserDAO;
 import com.mis_ofertas_api.app.repository.ValorationDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
+import com.mis_ofertas_api.app.util.ProductValorationAverage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -101,7 +103,18 @@ public class ValorationRestController {
             Product product=productDAO.product(productId);
             return valorationDAO.valorations(product);
         } catch (Exception e) {
-            throw e;
+            return new ArrayList<Valoration>();
+        }
+    }
+
+    @RequestMapping(path = "/average2/{systemUserId}", method = RequestMethod.GET)
+    public List<ProductValorationAverage> average2(@PathVariable Long systemUserId) {
+        try {
+            SystemUser systemUser=userDAO.systemUser(systemUserId);
+            List<Product>products=productDAO.products(systemUser,true,null,null,null,null,null);
+            return valorationDAO.valorations(products);
+        } catch (Exception e) {
+            return new ArrayList<ProductValorationAverage>();
         }
     }
 
