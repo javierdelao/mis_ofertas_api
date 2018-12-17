@@ -46,6 +46,11 @@ public class UserRestController {
                 Rol rol=rolDAO.rol("CLIENT");
                 systemUser.setRol(rol);
             }
+            if(systemUser.getAvatar()==null){
+                systemUser.setAvatar("avatar0.jpg");
+            }
+            systemUser.setPoints(0);
+
             systemUser.setId(null);
             userDAO.insert(systemUser);
             return systemUser;
@@ -59,6 +64,9 @@ public class UserRestController {
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
     public SystemUser edit(@RequestBody SystemUser systemUser) {
         try {
+            SystemUser systemUser1=userDAO.systemUser(systemUser.getId());
+            systemUser.setPoints(systemUser1.getPoints());
+            systemUser.setAvatar(systemUser1.getAvatar());
             userDAO.update(systemUser);
             return systemUser;
         } catch (Exception e) {
