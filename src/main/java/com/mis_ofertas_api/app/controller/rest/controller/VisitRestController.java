@@ -6,6 +6,8 @@ import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -38,7 +40,6 @@ public class VisitRestController {
             e.printStackTrace();
         }
         return null;
-
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.PUT)
@@ -61,6 +62,30 @@ public class VisitRestController {
             return new SuccessResponse(true, e.getMessage());
         }
     }
+
+    @RequestMapping(path = "/qta/{productId}", method = RequestMethod.GET)
+    public List<Visit> qta(@PathVariable Long productId) {
+        try {
+           return visitDAO.qta(productId);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @RequestMapping(path = "/visitperday/{productId}", method = RequestMethod.POST)
+    public List<Visit> visitPerDay(@PathVariable Long productId,@RequestBody Date date) {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+            Date date2=calendar.getTime();
+            return visitDAO.visitPerDay(productId,date,date2);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+
 
 
 }

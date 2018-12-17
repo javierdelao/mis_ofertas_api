@@ -2,8 +2,10 @@ package com.mis_ofertas_api.app.controller.rest.controller;
 
 import com.mis_ofertas_api.app.model.Country;
 import com.mis_ofertas_api.app.model.Discount;
+import com.mis_ofertas_api.app.model.SystemUser;
 import com.mis_ofertas_api.app.repository.CountryDAO;
 import com.mis_ofertas_api.app.repository.DiscountDAO;
+import com.mis_ofertas_api.app.repository.UserDAO;
 import com.mis_ofertas_api.app.response.SuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +28,19 @@ public class DiscountRestController {
         return discountDAO.discount(id);
     }
 
+    @RequestMapping(path = "/list/{userId}", method = RequestMethod.GET)
+    public List<Discount> discounts(@PathVariable Long userId) {
+        return discountDAO.discounts(userId);
+    }
+
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public List<Discount> discounts() {
         return discountDAO.discounts();
+    }
+
+    @RequestMapping(path = "/exist/{code}", method = RequestMethod.GET)
+    public Boolean discounts(@PathVariable String code) {
+        return discountDAO.existCode(code);
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)

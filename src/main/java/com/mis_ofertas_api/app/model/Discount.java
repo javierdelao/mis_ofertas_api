@@ -2,6 +2,7 @@ package com.mis_ofertas_api.app.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(uniqueConstraints = {
@@ -19,6 +20,19 @@ public class Discount implements Serializable, Bean, LazyCollectorBean{
 
     @Column(nullable = false)
     private Boolean used;
+
+    @Column(nullable = false)
+    private Date creationDate;
+
+    @Column(nullable = false)
+    private Date expirationDate;
+
+
+    @Column(nullable = false)
+    private String path;
+
+    @Column(nullable = false)
+    private Integer percentage;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
@@ -64,5 +78,37 @@ public class Discount implements Serializable, Bean, LazyCollectorBean{
     @Override
     public void fetchCollections() {
 
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Integer getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(Integer percentage) {
+        this.percentage = percentage;
     }
 }

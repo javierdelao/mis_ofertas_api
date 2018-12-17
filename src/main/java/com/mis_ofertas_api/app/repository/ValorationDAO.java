@@ -71,5 +71,24 @@ public class ValorationDAO extends BeanDAO<Valoration> {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<Valoration> valorations(Product product) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Valoration> criteriaQuery = criteriaBuilder.createQuery(Valoration.class);
+        Root<Valoration> root = criteriaQuery.from(Valoration.class);
+        Path<SystemUser> systemUserPath = root.get("systemUser");
+        Path<Product> productPath = root.get("product");
+
+        criteriaQuery.select(root)
+                .where(criteriaBuilder.equal(productPath, product));
+        Query<Valoration> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getResultList();
+        }catch (Exception e){
+            return null;
+        }
+    }
+
 
 }

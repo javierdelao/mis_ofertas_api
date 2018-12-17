@@ -35,6 +35,23 @@ public class StatusDAO extends BeanDAO<Status> {
     }
 
     @Transactional(readOnly = true)
+    public Status status(String statusName) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Status> criteriaQuery = criteriaBuilder.createQuery(Status.class);
+        Root<Status> root = criteriaQuery.from(Status.class);
+        Path<String> namePath = root.get("name");
+        criteriaQuery.select(root)
+                .where(criteriaBuilder.equal(namePath, statusName));
+        Query<Status> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<Status> statuses() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();

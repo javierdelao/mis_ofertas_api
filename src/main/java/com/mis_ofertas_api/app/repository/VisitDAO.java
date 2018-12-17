@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -31,6 +32,44 @@ public class VisitDAO extends BeanDAO<Visit> {
             return query.getSingleResult();
         }catch (Exception e){
             return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Visit> qta(Long productid) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Visit> criteriaQuery = criteriaBuilder.createQuery(Visit.class);
+        Root<Visit> root = criteriaQuery.from(Visit.class);
+        Path<Product> productPath = root.get("product");
+        criteriaQuery.select(root)
+                .where(criteriaBuilder.equal(productPath.get("id"), productid));
+        Query<Visit> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getResultList();
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Visit> visitPerDay(Long productid, Date date,Date date2) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Visit> criteriaQuery = criteriaBuilder.createQuery(Visit.class);
+        Root<Visit> root = criteriaQuery.from(Visit.class);
+        Path<Product> productPath = root.get("product");
+        Path<Date> datePath = root.get("visitDate");
+        criteriaQuery.select(root)
+                .where(criteriaBuilder.and(
+                        criteriaBuilder.equal(productPath.get("id"), productid),
+                        criteriaBuilder.between(datePath,date2,date))
+                );
+        Query<Visit> query = session.createQuery(criteriaQuery);
+        try {
+            return query.getResultList();
+        }catch (Exception e){
+            throw e;
         }
     }
 

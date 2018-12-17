@@ -324,8 +324,12 @@ public class InitialDataService {
 
                             Discount discount = new Discount();
                             discount.setUser(user);
-                            discount.setCode("325jbkjsvns");
+                            discount.setCreationDate(new Date());
+                            discount.setExpirationDate(new Date());
+                            discount.setPath("https://res.cloudinary.com/duzvu8wmg/image/upload/v1544974854/images/nuucemytyf8fu3kw83pm.png");
+                            discount.setCode("28093038");
                             discount.setUsed(false);
+                            discount.setPercentage(5);
                             discountDAO.insert(discount);
 
 

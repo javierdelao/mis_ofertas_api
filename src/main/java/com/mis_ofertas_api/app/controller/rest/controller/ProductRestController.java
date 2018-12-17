@@ -24,6 +24,8 @@ public class ProductRestController {
 
     private AreaDAO areaDAO;
 
+    private StatusDAO statusDAO;
+
     @Autowired
     public void setProductDAO(ProductDAO productDAO) {
         this.productDAO = productDAO;
@@ -47,6 +49,11 @@ public class ProductRestController {
     @Autowired
     public void setAreaDAO(AreaDAO areaDAO) {
         this.areaDAO = areaDAO;
+    }
+
+    @Autowired
+    public void setStatusDAO(StatusDAO statusDAO) {
+        this.statusDAO = statusDAO;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
@@ -157,13 +164,14 @@ public class ProductRestController {
         return null;
     }
 
-    @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
-    public SuccessResponse delete(@RequestBody Product product) {
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    public Product delete(@RequestBody Product product) {
         try {
+            product.setStatus(statusDAO.status("Inactivo"));
             productDAO.update(product);
-            return new SuccessResponse(true, "success");
+            return product;
         } catch (Exception e) {
-            return new SuccessResponse(true, e.getMessage());
+            throw e;
         }
     }
 

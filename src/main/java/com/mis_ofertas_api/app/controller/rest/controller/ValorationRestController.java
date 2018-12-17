@@ -95,5 +95,15 @@ public class ValorationRestController {
         }
     }
 
+    @RequestMapping(path = "/average/{productId}", method = RequestMethod.GET)
+    public List<Valoration> average(@PathVariable Long productId) {
+        try {
+            Product product=productDAO.product(productId);
+            return valorationDAO.valorations(product);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
 
 }
